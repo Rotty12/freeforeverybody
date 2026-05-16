@@ -30,7 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/api/signup", async (req, res) => {
   const { fullName, email, password, phone, homeAddress } = req.body;
