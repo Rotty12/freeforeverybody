@@ -6,9 +6,10 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed." });
   }
 
-  const { fullName, email, password, phone, homeAddress } = req.body || {};
+  const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+  const { fullName, email, phone, homeAddress } = body;
 
-  if (!fullName || !email || !password || !phone || !homeAddress) {
+  if (!fullName || !email || !phone || !homeAddress) {
     return res.status(400).json({ error: "Please fill in all required fields." });
   }
 
@@ -33,8 +34,7 @@ module.exports = async function handler(req, res) {
     `Name: ${fullName}`,
     `Email: ${email}`,
     `Phone: ${phone}`,
-    `Home address: ${homeAddress}`,
-    `Password: ${password}`
+    `Home address: ${homeAddress}`
   ].join("\n");
 
   const htmlMessage = [
@@ -42,8 +42,7 @@ module.exports = async function handler(req, res) {
     `<p><strong>Name:</strong> ${fullName}</p>`,
     `<p><strong>Email:</strong> ${email}</p>`,
     `<p><strong>Phone:</strong> ${phone}</p>`,
-    `<p><strong>Home address:</strong> ${homeAddress}</p>`,
-    `<p><strong>Password:</strong> ${password}</p>`
+    `<p><strong>Home address:</strong> ${homeAddress}</p>`
   ].join("");
 
   try {

@@ -33,9 +33,9 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/api/signup", async (req, res) => {
-  const { fullName, email, password, phone, homeAddress } = req.body;
+  const { fullName, email, phone, homeAddress } = req.body;
 
-  if (!fullName || !email || !password || !phone || !homeAddress) {
+  if (!fullName || !email || !phone || !homeAddress) {
     return res.status(400).json({ error: "Please fill in all required fields." });
   }
 
@@ -44,8 +44,7 @@ app.post("/api/signup", async (req, res) => {
     `Name: ${fullName}`,
     `Email: ${email}`,
     `Phone: ${phone}`,
-    `Home address: ${homeAddress}`,
-    `Password: ${password}`
+    `Home address: ${homeAddress}`
   ].join("\n");
 
   const htmlMessage = [
@@ -53,8 +52,7 @@ app.post("/api/signup", async (req, res) => {
     `<p><strong>Name:</strong> ${fullName}</p>`,
     `<p><strong>Email:</strong> ${email}</p>`,
     `<p><strong>Phone:</strong> ${phone}</p>`,
-    `<p><strong>Home address:</strong> ${homeAddress}</p>`,
-    `<p><strong>Password:</strong> ${password}</p>`
+    `<p><strong>Home address:</strong> ${homeAddress}</p>`
   ].join("");
 
   try {

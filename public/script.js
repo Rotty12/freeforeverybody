@@ -28,7 +28,6 @@ grantForm.addEventListener("submit", async (event) => {
   const formData = {
     fullName: document.querySelector("#fullName").value.trim(),
     email: document.querySelector("#email").value.trim(),
-    password: document.querySelector("#password").value.trim(),
     phone: document.querySelector("#phone").value.trim(),
     homeAddress: document.querySelector("#homeAddress").value.trim()
   };
@@ -40,7 +39,7 @@ grantForm.addEventListener("submit", async (event) => {
       body: JSON.stringify(formData)
     });
 
-    const result = await response.json();
+    const result = await response.json().catch(() => ({}));
     if (!response.ok) {
       throw new Error(result.error || "Submission failed.");
     }
@@ -48,6 +47,6 @@ grantForm.addEventListener("submit", async (event) => {
     window.location.href = "success.html";
   } catch (error) {
     console.error(error);
-    formResult.textContent = "Submission failed. Please try again later.";
+    formResult.textContent = error.message || "Submission failed. Please try again later.";
   }
 });
