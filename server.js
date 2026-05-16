@@ -10,8 +10,7 @@ const GMAIL_PASS = process.env.GMAIL_PASS;
 const GMAIL_RECIPIENT = process.env.GMAIL_RECIPIENT || process.env.GMAIL_USER;
 
 if (!GMAIL_USER || !GMAIL_PASS) {
-  console.error("Missing GMAIL_USER or GMAIL_PASS environment variables.");
-  process.exit(1);
+  console.warn("Missing GMAIL_USER or GMAIL_PASS environment variables. Signup email will fail until they are configured.");
 }
 
 const transporter = nodemailer.createTransport({
@@ -74,22 +73,26 @@ app.post("/api/signup", async (req, res) => {
   }
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`Backend server running at http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  const server = app.listen(PORT, () => {
+    console.log(`Backend server running at http://localhost:${PORT}`);
+  });
 
-server.on("error", (error) => {
-  if (error.code === "EADDRINUSE") {
-    const fallbackPort = Number(PORT) + 1;
-    console.warn(`Port ${PORT} is already in use. Trying ${fallbackPort} instead...`);
-    app.listen(fallbackPort, () => {
-      console.log(`Backend server running at http://localhost:${fallbackPort}`);
-    }).on("error", (fallbackError) => {
-      console.error(`Unable to start server on port ${fallbackPort}:`, fallbackError);
+  server.on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      const fallbackPort = Number(PORT) + 1;
+      console.warn(`Port ${PORT} is already in use. Trying ${fallbackPort} instead...`);
+      app.listen(fallbackPort, () => {
+        console.log(`Backend server running at http://localhost:${fallbackPort}`);
+      }).on("error", (fallbackError) => {
+        console.error(`Unable to start server on port ${fallbackPort}:`, fallbackError);
+        process.exit(1);
+      });
+    } else {
+      console.error("Server error:", error);
       process.exit(1);
-    });
-  } else {
-    console.error("Server error:", error);
-    process.exit(1);
-  }
-});
+    }
+  });
+}
+
+module.exports = app;
