@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Successful | OpenGrant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="success-page">
+  <main class="success-wrap">
+    <section class="success-panel" aria-labelledby="successTitle">
+      <span class="success-mark">✓</span>
+      <p class="eyebrow">Application received</p>
+      <h1 id="successTitle" class="success-title">Application submitted successfully</h1>
+    </section>
+    
+    <section class="success-carousel-section">
+      <div class="carousel-container">
+        <div class="carousel-viewport" aria-live="polite">
+          <div class="carousel-track">
+          <div class="carousel-slide">
+            <p class="carousel-message">Great news — your request is now in the review queue.</p>
+          </div>
+          <div class="carousel-slide">
+            <p class="carousel-message">Expect a confirmation email within 24 hours.</p>
+          </div>
+          <div class="carousel-slide">
+            <p class="carousel-message">Your application is being reviewed by our funding team.</p>
+          </div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn prev" id="prevBtn" aria-label="Previous message">❮</button>
+          <div class="carousel-dots" id="dotsContainer"></div>
+          <button class="carousel-btn next" id="nextBtn" aria-label="Next message">❯</button>
+        </div>
+      </div>
+    </section>
+    
+    <section class="success-actions-section">
+      <div class="hero-actions">
+        <a class="button primary" href="index.html">Back to home</a>
+        <a class="button secondary" href="signin.html">Return to dashboard</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.querySelector('.carousel-track');
+      const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const dotsContainer = document.getElementById('dotsContainer');
+
+      if (!track || !slides.length || !prevBtn || !nextBtn || !dotsContainer) {
+        return;
+      }
+
+      let currentIndex = 0;
+      let autoplayId;
+
+      const updateCarousel = () => {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slides.forEach((slide, index) => {
+          slide.classList.toggle('active', index === currentIndex);
+          slide.setAttribute('aria-hidden', String(index !== currentIndex));
+        });
+        dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+          dot.setAttribute('aria-current', index === currentIndex ? 'true' : 'false');
+        });
+      };
+
+      const goToSlide = (index) => {
+        currentIndex = (index + slides.length) % slides.length;
+        updateCarousel();
+      };
+
+      const restartAutoplay = () => {
+        window.clearInterval(autoplayId);
+        autoplayId = window.setInterval(() => goToSlide(currentIndex + 1), 4500);
+      };
+
+      slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'carousel-dot';
+        dot.setAttribute('aria-label', `Go to message ${index + 1}`);
+        dot.addEventListener('click', () => {
+          goToSlide(index);
+          restartAutoplay();
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        goToSlide(currentIndex - 1);
+        restartAutoplay();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        goToSlide(currentIndex + 1);
+        restartAutoplay();
+      });
+
+      updateCarousel();
+      restartAutoplay();
+    });
+  </script>
+</body>
+</html>

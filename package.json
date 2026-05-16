@@ -1,0 +1,15 @@
+{
+  "name": "freeforeverybody-backend",
+  "version": "1.0.0",
+  "description": "Simple backend to forward signup form data to Gmail.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.4",
+    "nodemailer": "^6.9.5"
+  }
+}

@@ -1,0 +1,8 @@
+.env
+node_modules/
+*.log
+server.err.log
+server.log
+.history/
+.qodo/
+.sixth/

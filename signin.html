@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | OpenGrant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <main class="auth-wrap">
+    <section class="auth-panel" aria-labelledby="signinTitle">
+      <a class="brand auth-brand" href="index.html" aria-label="OpenGrant home">
+        <span class="brand-mark">OG</span>
+        <span>OpenGrant</span>
+      </a>
+      <p class="eyebrow">Applicant access</p>
+      <h1 id="signinTitle">Secure applicant access</h1>
+      <p class="lede">Sign in to continue your funding request and manage saved applications from one dashboard.</p>
+      <form class="grant-form auth-form" id="signinForm">
+        <div class="form-row">
+          <label for="signinName">Full name</label>
+          <input id="signinName" name="name" type="text" placeholder="Jordan Smith" autocomplete="name" required>
+        </div>
+        <div class="form-row">
+          <label for="signinEmail">Email</label>
+          <input id="signinEmail" name="email" type="email" placeholder="jordan@example.com" autocomplete="email" required>
+        </div>
+        <button class="button primary full" type="submit">Continue to dashboard</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.querySelector("#signinForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const params = new URLSearchParams({
+        name: data.get("name").toString().trim(),
+        email: data.get("email").toString().trim()
+      });
+
+      window.location.href = `profile.html?${params.toString()}`;
+    });
+  </script>
+</body>
+</html>

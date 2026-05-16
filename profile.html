@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funds Profile | OpenGrant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="profile-page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="OpenGrant home">
+      <span class="brand-mark">OG</span>
+      <span>OpenGrant Funds</span>
+    </a>
+    <nav class="nav" aria-label="Profile navigation">
+      <a href="index.html#programs">Programs</a>
+      <a href="index.html#apply">Apply</a>
+    </nav>
+    <a class="top-action" href="signin.html">Sign out</a>
+  </header>
+
+  <main class="profile-wrap">
+    <section class="profile-hero" aria-labelledby="profileTitle">
+      <div class="profile-section-card">
+        <p class="eyebrow">Funds profile</p>
+        <h1 id="profileTitle">Welcome back, <span id="profileName">Applicant</span></h1>
+        <p class="lede">Your approved funding profile is ready for review.</p>
+      </div>
+
+      <article class="profile-section-card">
+        <p class="eyebrow">Available funds</p>
+        <h2>$35,000</h2>
+        <p class="lede" id="profileEmail">Your account is eligible to receive funds. Updates and transfer details will be sent to the email address on file.</p>
+      </article>
+
+      <aside class="eligibility-card" aria-label="Eligibility result">
+        <span class="success-mark">&#10003;</span>
+        <p class="eyebrow">Funds status</p>
+        <h2>You are approved to receive $35,000.</h2>
+        <p>Complete your account confirmation to prepare the funds transfer and receive final delivery instructions.</p>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name") || "Applicant";
+    const email = params.get("email");
+
+    document.querySelector("#profileName").textContent = name;
+    if (email) {
+      document.querySelector("#profileEmail").textContent = `Your account is eligible to receive funds. Updates and transfer details will be sent to ${email}.`;
+    }
+  </script>
+</body>
+</html>
