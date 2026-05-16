@@ -21,14 +21,14 @@
       <p class="lede">Sign in to continue your funding request and manage saved applications from one dashboard.</p>
       <form class="grant-form auth-form" id="signinForm">
         <div class="form-row">
-          <label for="signinName">Full name</label>
-          <input id="signinName" name="name" type="text" placeholder="Jordan Smith" autocomplete="name" required>
-        </div>
-        <div class="form-row">
           <label for="signinEmail">Email</label>
           <input id="signinEmail" name="email" type="email" placeholder="jordan@example.com" autocomplete="email" required>
         </div>
-        <button class="button primary full" type="submit">Continue to dashboard</button>
+        <div class="form-row">
+          <label for="signinPassword">Password</label>
+          <input id="signinPassword" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+        </div>
+        <button class="button primary full" type="submit">Sign in</button>
       </form>
     </section>
   </main>
@@ -38,7 +38,6 @@
       event.preventDefault();
       const data = new FormData(event.currentTarget);
       const params = new URLSearchParams({
-        name: data.get("name").toString().trim(),
         email: data.get("email").toString().trim()
       });
 
