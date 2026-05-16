@@ -22,11 +22,16 @@ module.exports = async function handler(req, res) {
   }
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: GMAIL_USER,
       pass: GMAIL_PASS
-    }
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000
   });
 
   const textMessage = [
@@ -57,6 +62,14 @@ module.exports = async function handler(req, res) {
     return res.json({ ok: true });
   } catch (error) {
     console.error("Gmail send failed:", error);
-    return res.status(500).json({ error: "Unable to send signup details by email. Try again later." });
+    if (error.code === "EAUTH" || String(error.responseCode) === "535") {
+      return res.status(500).json({ error: "Gmail authentication failed. Use a Gmail App Password for GMAIL_PASS in Vercel." });
+    }
+
+    if (error.code === "ETIMEDOUT" || error.code === "ESOCKET") {
+      return res.status(500).json({ error: "Email server connection timed out. Try redeploying, or use an email API provider instead of SMTP." });
+    }
+
+    return res.status(500).json({ error: `Unable to send signup details by email. ${error.code || "SMTP_ERROR"}` });
   }
 };
