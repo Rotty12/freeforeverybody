@@ -1,26 +1,13 @@
-const fs = require("fs");
-const path = require("path");
 const bcrypt = require("bcrypt");
 
-const USERS_FILE = path.join(__dirname, "users.json");
+// Serverless-friendly in-memory user store.
+// NOTE: Data is not durable across cold starts or redeploys.
 const SALT_ROUNDS = 12;
 
-function ensureUsersFile() {
-  if (!fs.existsSync(USERS_FILE)) {
-    fs.writeFileSync(USERS_FILE, JSON.stringify({ users: [] }, null, 2), "utf8");
-  }
-}
-
-function readUsersFile() {
-  ensureUsersFile();
-  const raw = fs.readFileSync(USERS_FILE, "utf8");
-  const parsed = JSON.parse(raw || "{}");
-  return Array.isArray(parsed.users) ? parsed.users : [];
-}
-
-function writeUsersFile(users) {
-  fs.writeFileSync(USERS_FILE, JSON.stringify({ users }, null, 2), "utf8");
-}
+const inMemoryState = {
+  seeded: false,
+  users: []
+};
 
 function normalizeEmail(email) {
   return String(email || "").trim().toLowerCase();
@@ -31,8 +18,9 @@ function findUserByEmail(users, email) {
   return users.find((u) => u.email === normalized);
 }
 
+
 async function createUser({ email, password, name }) {
-  const users = readUsersFile();
+  const users = inMemoryState.users;
 
   const normalizedEmail = normalizeEmail(email);
   if (!normalizedEmail) throw new Error("Email is required.");
@@ -50,13 +38,12 @@ async function createUser({ email, password, name }) {
   };
 
   users.push(newUser);
-  writeUsersFile(users);
 
   return { id: newUser.id, email: newUser.email, name: newUser.name };
 }
 
 async function verifyUser({ email, password }) {
-  const users = readUsersFile();
+  const users = inMemoryState.users;
   const normalizedEmail = normalizeEmail(email);
   if (!normalizedEmail) throw new Error("Email is required.");
 
@@ -68,6 +55,7 @@ async function verifyUser({ email, password }) {
 
   return { id: user.id, email: user.email, name: user.name };
 }
+
 
 // Node 16+ has crypto.randomUUID; fall back if missing
 function cryptoSafeId() {
