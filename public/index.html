@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -33,6 +36,7 @@
         <span class="orb orb-three"></span>
         <span class="orb orb-four"></span>
       </div>
+
       <div class="hero-copy">
         <p class="eyebrow">Financial Assistance For Everybody</p>
         <h1>Grant funds that's free for everybody</h1>
@@ -41,6 +45,7 @@
           <a class="button primary" href="#apply">Apply now</a>
           <a class="button secondary" href="#programs">See programs</a>
         </div>
+
         <div class="hero-highlights">
           <div>
             <strong>120+</strong>
@@ -55,6 +60,8 @@
             <span>average decision</span>
           </div>
         </div>
+
+        
       </div>
 
       <aside class="hero-panel" aria-label="Current funding summary">
@@ -152,6 +159,10 @@
         <div class="form-row">
           <label for="homeAddress">Home address</label>
           <textarea id="homeAddress" name="homeAddress" rows="3" placeholder="123 Grant Ave ....." autocomplete="street-address" required></textarea>
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Create a password" autocomplete="new-password" required minlength="8">
         </div>
         <button class="button primary full" type="submit">Submit application</button>
         <p class="form-result" id="formResult" role="status" aria-live="polite"></p>

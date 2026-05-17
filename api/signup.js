@@ -13,9 +13,9 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "Please fill in all required fields." });
   }
 
-  const GMAIL_USER = process.env.GMAIL_USER;
-  const GMAIL_PASS = process.env.GMAIL_PASS;
-  const GMAIL_RECIPIENT = process.env.GMAIL_RECIPIENT || process.env.GMAIL_USER;
+  const GMAIL_USER = String(process.env.GMAIL_USER || "").trim();
+  const GMAIL_PASS = String(process.env.GMAIL_PASS || "").trim();
+  const GMAIL_RECIPIENT = String(process.env.GMAIL_RECIPIENT || process.env.GMAIL_USER || "").trim();
 
   if (!GMAIL_USER || !GMAIL_PASS) {
     return res.status(500).json({ error: "Email service is not configured." });

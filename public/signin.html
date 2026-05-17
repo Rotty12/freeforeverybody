@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="auth-page">
@@ -19,30 +22,80 @@
       <p class="eyebrow">Applicant access</p>
       <h1 id="signinTitle">Secure applicant access</h1>
       <p class="lede">Sign in to continue your funding request and manage saved applications from one dashboard.</p>
+
       <form class="grant-form auth-form" id="signinForm">
         <div class="form-row">
           <label for="signinEmail">Email</label>
           <input id="signinEmail" name="email" type="email" placeholder="jordan@example.com" autocomplete="email" required>
         </div>
+
         <div class="form-row">
           <label for="signinPassword">Password</label>
           <input id="signinPassword" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
         </div>
+
         <button class="button primary full" type="submit">Sign in</button>
+        <p class="form-result" id="signinResult" role="status" aria-live="polite"></p>
+
+        <p class="lede" style="margin-top:8px;">
+          New here? <a href="index.html#signup" style="text-decoration:underline;font-weight:800;">Create an account</a>.
+        </p>
       </form>
     </section>
   </main>
 
   <script>
-    document.querySelector("#signinForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const data = new FormData(event.currentTarget);
-      const params = new URLSearchParams({
-        email: data.get("email").toString().trim()
-      });
+    (function () {
+      const form = document.querySelector("#signinForm");
+      const result = document.querySelector("#signinResult");
+      const emailInput = document.querySelector("#signinEmail");
 
-      window.location.href = `profile.html?${params.toString()}`;
-    });
+      if (!form || !result || !emailInput) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get("email");
+      if (email) emailInput.value = email;
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (window.location.protocol === "file:") {
+          result.textContent = "Please open the site at http://localhost:3001 before signing in.";
+          return;
+        }
+
+        result.textContent = "Signing in...";
+
+        const data = new FormData(form);
+        const email = String(data.get("email") || "").trim();
+        const password = String(data.get("password") || "");
+
+        try {
+          const response = await fetch("/api/auth/signin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+          });
+
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(payload.error || "Sign in failed.");
+          }
+
+          // Store token for potential future protected endpoints.
+          if (payload && payload.token) {
+            localStorage.setItem("authToken", payload.token);
+          }
+
+          const user = payload && payload.user ? payload.user : {};
+          const name = user.name || "Applicant";
+
+          window.location.href = "profile.html?name=" + encodeURIComponent(name) + "&email=" + encodeURIComponent(user.email || email);
+        } catch (error) {
+          result.textContent = error.message || "Sign in failed. Please try again.";
+        }
+      });
+    })();
   </script>
 </body>
 </html>

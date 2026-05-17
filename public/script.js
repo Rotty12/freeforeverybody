@@ -26,14 +26,18 @@ grantForm.addEventListener("submit", async (event) => {
   formResult.textContent = "Submitting application...";
 
   const formData = {
-    fullName: document.querySelector("#fullName").value.trim(),
+    name: document.querySelector("#fullName").value.trim(),
     email: document.querySelector("#email").value.trim(),
+    password: document.querySelector("#password").value
+      ? document.querySelector("#password").value.trim()
+      : "",
+    // keep these for future reviewer workflows (current auth endpoint only stores name/email/password)
     phone: document.querySelector("#phone").value.trim(),
     homeAddress: document.querySelector("#homeAddress").value.trim()
   };
 
   try {
-    const response = await fetch("/api/signup", {
+    const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)
