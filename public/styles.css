@@ -557,6 +557,10 @@ input::placeholder, textarea::placeholder{ color: rgba(11,11,15,0.45); }
 @media (max-width: 640px){
   .topbar{ padding: 12px 14px; }
   .header-actions .signin-link{ display:none; }
+  .mobile-signin{ display:block; }
   .program-grid{ grid-template-columns: 1fr; }
   .hero{ padding-top: 20px; }
 }
+
+.mobile-signin{ display:none; }
+
